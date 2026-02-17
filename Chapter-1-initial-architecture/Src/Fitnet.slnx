@@ -1,7 +1,10 @@
 ﻿<Solution>
-  <Project Path="Fitnet.AppHost/Fitnet.AppHost.csproj" />
-  <Project Path="Fitnet.ArchitectureTests\Fitnet.ArchitectureTests.csproj" Type="C#" />
-  <Project Path="Fitnet.IntegrationTests\Fitnet.IntegrationTests.csproj" Type="C#" />
-  <Project Path="Fitnet.UnitTests\Fitnet.UnitTests.csproj" Type="C#" />
-  <Project Path="Fitnet\Fitnet.csproj" Type="C#" />
+    <Project Path="Fitnet.AppHost/Fitnet.AppHost.csproj" />
+    <Project Path="Fitnet.ArchitectureTests\Fitnet.ArchitectureTests.csproj" Type="C#" />
+    <Project Path="Fitnet.IntegrationTests\Fitnet.IntegrationTests.csproj" Type="C#" />
+    <Project Path="Fitnet.UnitTests\Fitnet.UnitTests.csproj" Type="C#" />
+    <Project Path="Fitnet\Fitnet.csproj" Type="C#" />
+    <Project Path="Modules\Offers\Offers.Domain\Offers.Domain.csproj" Type="C#" />
+    <Project Path="Modules\Offers\Offers.Application\Offers.Application.csproj" Type="C#" />
+    <Project Path="Modules\Offers\Offers.Infrastructure\Offers.Infrastructure.csproj" Type="C#" />
 </Solution>

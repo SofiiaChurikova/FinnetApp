@@ -4,7 +4,7 @@ using EvolutionaryArchitecture.Fitnet.Common.ErrorHandling;
 using EvolutionaryArchitecture.Fitnet.Common.Events.EventBus;
 using EvolutionaryArchitecture.Fitnet.Common.Validation.Requests;
 using EvolutionaryArchitecture.Fitnet.Contracts;
-using EvolutionaryArchitecture.Fitnet.Offers;
+using EvolutionaryArchitecture.Fitnet.Modules.Offers.Infrastructure;
 using EvolutionaryArchitecture.Fitnet.Passes;
 using EvolutionaryArchitecture.Fitnet.Reports;
 
@@ -20,7 +20,7 @@ builder.Services.AddClock();
 
 builder.Services.AddPasses(builder.Configuration);
 builder.Services.AddContracts(builder.Configuration);
-builder.Services.AddOffers(builder.Configuration);
+builder.Services.AddOffersModule(builder.Configuration);
 builder.Services.AddReports(builder.Configuration);
 
 await using var app = builder.Build();
@@ -35,8 +35,7 @@ app.UseApiDocumentation();
 app.UsePasses();
 app.UseContracts();
 app.UseReports();
-app.UseOffers();
-
+app.UseOffersModule();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

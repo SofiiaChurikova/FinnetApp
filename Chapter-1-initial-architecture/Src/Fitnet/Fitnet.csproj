@@ -33,5 +33,9 @@
         <Link>Contracts.http</Link>
       </Content>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Modules\Offers\Offers.Infrastructure\Offers.Infrastructure.csproj" />
+    </ItemGroup>
   
 </Project>
