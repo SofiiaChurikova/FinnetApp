@@ -1,0 +1,10 @@
+So I decided to take Offers.
+
+This module is responsible for Offer Preparation - so! it checks/listens for expired passes (its like an event) and then makes a new offer as like 10% for for customer whose passes were expired. And this offer will be valid for 1 year, then add to db.
+And also there is full info for offers, like their unique ids, customer ids, when it was created, what is the discount (standard as 10%), start and end of the offer.
+Also creates the event about a new offer for example for other parts of the system so they can do something with that info later.
+
+This module has responsibility only for offers. So, it doesnt manage (create/remove) customer info, also does nothing with passes - it cannot add or delete them and the same for contracts, reports, etc. So one more time - everything only for offers (for customers with expired passes) and managing them.
+
+Data Ownership - there is a db for offers calles "Offers", which has:
+unique id for offer (GUID), customer id (GUID) - which customer gets this offer? -- which is linked to customer entity, prepared at (datetime) - when this offer was created, discount (decimal) - for now it is 10%, offered from date (datetime) - from which time this offer becomes valid, offered from to (datetime) - when this offer expires - for now it is creation date + 1 year

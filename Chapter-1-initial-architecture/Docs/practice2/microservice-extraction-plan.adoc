@@ -1,0 +1,21 @@
+TASK A:
+I made a single application facade IOfferService:
+
+public interface IOfferService
+{
+    Task<Offer> PrepareForCustomerAsync(Guid customerId, CancellationToken cancellationToken);
+}
+
+So other parts (like PassExpiredEventHandler) uses this interface. Internal classes are not visible/accessible from outside this module.
+
+TASK B:
+API:
+POST - '/api/offers' - we can create an offer for a customer
+GET - '/api/offers/{offerId}' - we can get details about the offer with it id
+
+DATA:
+Module has its own db "Offers". The table is like 'Offer' - offer id, customer id, discount, preparedAt, offeredFromDate, offeredFromTo. So other modules dont have an ability to write or read the data directly.
+
+TALK:
+They could talk with events - subscribes to PassExpiredEvent using message broker --- passes module can publish PassExpiredEvent and offers module listen to it and can prepare actions like to prepare a new offer for a customer.
+Maybe calls via HTTP - POST '/api/offers/' ... if it will be needed.
