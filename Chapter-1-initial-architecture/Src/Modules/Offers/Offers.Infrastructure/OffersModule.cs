@@ -2,6 +2,7 @@
 
 using Application;
 using Database;
+using Processing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class OffersModule
     {
         services.AddDatabase(configuration);
         services.AddApplicationServices();
+        services.AddHostedService<OutboxProcessor>();
 
         return services;
     }
