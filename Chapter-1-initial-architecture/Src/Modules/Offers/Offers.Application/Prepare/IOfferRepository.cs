@@ -4,5 +4,5 @@ using Domain.Entities;
 
 public interface IOfferRepository
 {
-    Task AddAsync(Offer offer, CancellationToken cancellationToken = default);
+    Task AddAsync(Offer offer, string outboxPayload, CancellationToken cancellationToken = default);
 }
