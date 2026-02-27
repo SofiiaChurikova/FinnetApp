@@ -1,0 +1,88 @@
+Commands:
+1. curl -X 'POST' \
+  'http://localhost:5013/api/contracts' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "gymName": "Test Gym",
+  "customerAge": 25,
+  "customerHeight": 175,
+  "preparedAt": "2026-02-27T20:00:00Z"
+}'
+2. curl -X 'PATCH' \
+  'http://localhost:5013/api/contracts/{contractId}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "signedAt": "2026-02-27T20:08:55.672Z"
+}'
+3. curl -X 'GET' \
+  'http://localhost:5013/api/passes' \
+  -H 'accept: application/json'
+4. curl -X 'PATCH' \
+  'http://localhost:5013/api/passes/{passId}' \
+  -H 'accept: */*'
+
+Logs:
+
+
+
+831
+                                
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+832                                
+      Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Decimal), @p8='?' (DbType = DateTime), @p9='?' (DbType = DateTime), @p10='?' (DbType = DateTime), @p11='?' (DbType = Guid), @p12='?' (DbType = Guid), @p13='?' (DbType = DateTime), @p14='?', @p15='?' (DbType = DateTime), @p16='?'], CommandType='Text', CommandTimeout='30']
+833                               
+      INSERT INTO "Offers"."OfferSagas" ("SagaId", "CorrelationId", "CreatedAt", "Status", "UpdatedAt")
+834                                
+      VALUES (@p0, @p1, @p2, @p3, @p4);
+835                                
+      INSERT INTO "Offers"."Offers" ("Id", "CustomerId", "Discount", "OfferedFromDate", "OfferedFromTo", "PreparedAt")
+836                                
+      VALUES (@p5, @p6, @p7, @p8, @p9, @p10);
+837                                
+      INSERT INTO "Offers"."OutboxMessages" ("Id", "CorrelationId", "CreatedAt", "Payload", "ProcessedAt", "Type")
+838                                
+      VALUES (@p11, @p12, @p13, @p14, @p15, @p16);
+839                                
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+840                                
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+841                                
+      SELECT o."Id", o."CorrelationId", o."CreatedAt", o."Payload", o."ProcessedAt", o."Type"
+842                                
+      FROM "Offers"."OutboxMessages" AS o
+843                                
+      WHERE o."ProcessedAt" IS NULL
+844                                
+info: EvolutionaryArchitecture.Fitnet.Modules.Offers.Infrastructure.Processing.OutboxProcessor[1]
+845                                
+      Processing outbox message: Type=OfferPrepared, CorrelationId=08c03057-0689-4db3-9f1a-f36a3ed52912
+846                                
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+847                                
+      Executed DbCommand (2ms) [Parameters=[@message_CorrelationId='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+848                                
+      SELECT o."SagaId", o."CorrelationId", o."CreatedAt", o."Status", o."UpdatedAt"
+849                                
+      FROM "Offers"."OfferSagas" AS o
+850                                
+      WHERE o."CorrelationId" = @message_CorrelationId
+851                                
+      LIMIT 1
+852                               
+info: EvolutionaryArchitecture.Fitnet.Modules.Offers.Infrastructure.Processing.OutboxProcessor[3]
+853                                
+      Saga cee1999e-bc2b-4d08-9a5c-df6440a9f4a6 completed.
+854                                
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+855                                
+      Executed DbCommand (3ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?', @p1='?' (DbType = DateTime), @p4='?' (DbType = Guid), @p3='?' (DbType = DateTime)], CommandType='Text', CommandTimeout='30']
+856                                
+      UPDATE "Offers"."OfferSagas" SET "Status" = @p0, "UpdatedAt" = @p1
+857                                
+      WHERE "SagaId" = @p2;
+858                                
+      UPDATE "Offers"."OutboxMessages" SET "ProcessedAt" = @p3
+859                                
+      WHERE "Id" = @p4;
+
